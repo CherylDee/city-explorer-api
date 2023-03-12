@@ -6,7 +6,7 @@
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
-const { application } = require('express');
+
 
 // **** app is the server *****
 const app = express();
