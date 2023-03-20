@@ -9,7 +9,7 @@ const cors = require('cors');
 
 
 const data = require('./data/weather.json');
-const { response } = require('express');
+
 
 
 // **** app is the server *****
@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 //**** define weather endpoints ****/
-app.get('/', (req, res, next) => {
+app.get('/weather', (req, res, next) => {
 
   // **** accept search queries - lat, lon, searchQuery - request.query /weather?lat, lon, query=value
   try {
@@ -38,16 +38,18 @@ app.get('/', (req, res, next) => {
     // let lon = res.query.lon;
     let cityName = req.query.searchQuery;
     let city = data.find(city => city.city_name.toLowerCase() === cityName.toLowerCase());
-
+    // console.log(city);
     let weatherData = city.data.map(dayObj => new Forecast(dayObj));
 
+    // console.log(weatherData);
     // *** verify working data from weather data ****
-    response.status(200).send(weatherData);
+    res.status(200).send(weatherData);
 
   } catch(error) {
     next(error);
   }
 });
+
 
 // *** groom data for forecast class ****
 class Forecast {
